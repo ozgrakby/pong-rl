@@ -4,6 +4,7 @@ import config, os, datetime, time
 
 def train():
     now = datetime.datetime.now()
+    os.makedirs("logs", exist_ok=True)
     log_filename = f"logs/training_{now.strftime('%Y-%m-%d_%H-%M-%S')}.log"
     baslangic_zamani = time.time()
     f = open(log_filename, "w", encoding = "utf-8")
@@ -13,11 +14,11 @@ def train():
     agent_r = Agent()
 
     if os.path.exists(config.AGENT1_PATH):
-        print("Birinci ajan yükleniyor...")
+        print("First agent is loading...")
         agent_l.load(config.AGENT1_PATH)
     
     if os.path.exists(config.AGENT2_PATH):
-        print("İkinci ajan yükleniyor...")
+        print("Second agent is loading...")
         agent_r.load(config.AGENT2_PATH)
 
     total_steps = 0
@@ -64,13 +65,13 @@ def train():
             if episode % config.SAVE_INTERVAL == 0:
                     agent_l.save(config.AGENT1_PATH)
                     agent_r.save(config.AGENT2_PATH)
-                    print(f"Modeller kaydedildi: Episode {episode}")
+                    print(f"Models saved: Episode {episode}")
     
     except KeyboardInterrupt:
-        print("\nEğitim kullanıcı tarafından durduruldu.")
+        print("\nTraining terminated by user.")
         agent_l.save(config.AGENT1_PATH)
         agent_r.save(config.AGENT2_PATH)
-        print("Son durum kaydedildi.")
+        print("Models saved.")
         env.close()
         bitis_zamani = time.time()
         gecen_sure = bitis_zamani - baslangic_zamani
@@ -78,7 +79,7 @@ def train():
         dakika = int(gecen_sure // 60)
         saniye = int(gecen_sure % 60)
 
-        f.write(f"Eğitim {dakika} dakika {saniye} saniye sürdü")
+        f.write(f"Training took {dakika} minutes and {saniye} seconds")
         f.flush()
         f.close()
 
@@ -88,18 +89,17 @@ def test():
     agent_left = Agent(mode='test')
     agent_right = Agent(mode='test')
     
-    # Modelleri Yükle (Zorunlu)
     if os.path.exists(config.AGENT1_PATH):
         agent_left.load(config.AGENT1_PATH)
-        print("Birinci Ajan yüklendi.")
+        print("First agent is ready.")
     else:
-        print("UYARI: Birinci Ajan dosyası bulunamadı!")
+        print("WARNING: First Agent file not found!")
 
     if os.path.exists(config.AGENT2_PATH):
         agent_right.load(config.AGENT2_PATH)
-        print("İkinci Ajan yüklendi.")
+        print("Second agent is ready.")
     else:
-        print("UYARI: İkinci Ajan dosyası bulunamadı!")
+        print("WARNING: Second Agent file not found!")
 
     clock = env.clock
 
@@ -128,14 +128,15 @@ def test():
     env.close()
 
 if __name__ == "__main__":
-    print("1. Modeli Eğit (Train)")
-    print("2. Modeli İzle (Test/Play)")
+    os.makedirs(config.MODEL_DIR, exist_ok=True)
+    print("1. Train Models")
+    print("2. Watch Models")
     
-    choice = input("Seçiminiz (1 veya 2): ")
+    choice = input("Enter your choice (1 or 2): ")
     
     if choice == "1":
         train()
     elif choice == "2":
         test()
     else:
-        print("Geçersiz seçim.")
+        print("Invalid choice!")

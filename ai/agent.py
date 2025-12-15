@@ -12,7 +12,6 @@ class Agent:
         self.mode = mode
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        # self.device = torch.device("cpu")
 
         self.gamma = config.GAMMA
         self.lr = config.LR
@@ -56,7 +55,7 @@ class Agent:
         states, actions, rewards, next_states, dones = self.memory.sample()
 
         states = torch.FloatTensor(states).to(self.device)
-        actions = torch.LongTensor(actions).unsqueeze(1).to(self.device) # Boyut: [64] -> [64, 1]
+        actions = torch.LongTensor(actions).unsqueeze(1).to(self.device)
         rewards = torch.FloatTensor(rewards).to(self.device)
         next_states = torch.FloatTensor(next_states).to(self.device)
         dones = torch.FloatTensor(dones).to(self.device)
