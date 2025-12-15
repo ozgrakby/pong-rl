@@ -104,4 +104,39 @@ You can tweak the training and game parameters in `config.py`:
 
 ---
 
-**Note:** Reinforcement Learning takes time. It might take several thousand episodes before the agents start hitting the ball consistently. Be patient!
+<h2 align="center">Project Visuals</h2>
+
+<table align="center">
+  <tr>
+    <td align="center" width="50%">
+      <h3>Training Phase (Logs)</h3>
+    </td>
+    <td align="center" width="50%">
+      <h3>Testing Phase (Gameplay)</h3>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <img src="screenshots/training_log.png" alt="Training Logs" width="100%">
+    </td>
+    <td>
+      <img src="screenshots/gameplay.gif" alt="Gameplay Animation" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <p>
+        The console output monitors the real-time training progress. It tracks the <b>Episode</b> count, total <b>Steps</b> taken, and the current <b>Epsilon</b> value (exploration rate).
+        <br><br>
+        Most importantly, it logs the <b>Score</b> to visualize the improvement in defense strategies.
+      </p>
+    </td>
+    <td valign="top">
+      <p>
+        A live demonstration of the trained models. The <b>Self-Play</b> mechanism allows agents to react dynamically.
+        <br><br>
+        In this GIF, you can see the agents playing at high speed with the optimized policy network (Epsilon = 0).
+      </p>
+    </td>
+  </tr>
+</table>
